@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speedrun Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>⏱ Speedrun Timer</h1>
+
+    <div id="search-section">
+      <input id="game-input" type="text" placeholder="Game name..." />
+      <button onclick="searchGame()">Search</button>
+      <div id="game-results"></div>
+    </div>
+
+    <div id="category-section" class="hidden">
+      <label>Category:</label>
+      <select id="category-select" onchange="loadSplits()"></select>
+    </div>
+
+    <div id="timer-section" class="hidden">
+      <div id="timer-display">0:00.000</div>
+      <div id="controls">
+        <button id="btn-start" onclick="startTimer()">Start</button>
+        <button id="btn-split" onclick="doSplit()" disabled>Split</button>
+        <button id="btn-reset" onclick="resetTimer()">Reset</button>
+      </div>
+      <div id="splits-container">
+        <table id="splits-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Split</th>
+              <th>Tempo</th>
+              <th>Delta</th>
+            </tr>
+          </thead>
+          <tbody id="splits-body"></tbody>
+        </table>
+      </div>
+      <div id="pb-section">
+        <span>PB: <span id="pb-display">--</span></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
