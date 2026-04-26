@@ -122,6 +122,100 @@ async function fetchWR(catId) {
   } catch { return null; }
 }
 
+// ── NEUTRAL GAME ──────────────────────────────────────────────────────────────
+
+function neutralGame() {
+  selectedGame = null;
+  document.getElementById('game-input').value = 'Jogo Neutro';
+  document.getElementById('game-results').innerHTML = '';
+  document.getElementById('category-section').classList.add('hidden');
+  splits = [{ name: 'Split 1' }];
+  splitTimes = [];
+  pb = null;
+  resetTimer();
+  document.getElementById('timer-section').classList.remove('hidden');
+}
+
+// ── SAVE / LOAD FILE ──────────────────────────────────────────────────────────
+
+function saveSplitsFile() {
+  const data = {
+    game: document.getElementById('game-input').value || 'Jogo Neutro',
+    pb,
+    splits: splits.map(s => ({ name: s.name }))
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${data.game.replace(/[^a-z0-9]/gi, '_')}_splits.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function loadSplitsFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data.splits) || !data.splits.length) throw new Error();
+      document.getElementById('game-input').value = data.game || 'Jogo Neutro';
+      splits = data.splits.map(s => ({ name: s.name }));
+      pb = data.pb || null;
+      selectedGame = null;
+      document.getElementById('category-section').classList.add('hidden');
+      resetTimer();
+      document.getElementById('timer-section').classList.remove('hidden');
+    } catch {
+      alert('Arquivo de splits inválido.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ── SPLIT EDITOR ──────────────────────────────────────────────────────────────
+
+function openEditor() {
+  const list = document.getElementById('editor-list');
+  list.innerHTML = '';
+  splits.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'editor-row';
+    row.innerHTML = `<input type="text" value="${s.name}" /><button onclick="editorRemove(this)">✕</button>`;
+    list.appendChild(row);
+  });
+  document.getElementById('editor-modal').classList.remove('hidden');
+}
+
+function closeEditor() {
+  document.getElementById('editor-modal').classList.add('hidden');
+}
+
+function editorAddSplit() {
+  const list = document.getElementById('editor-list');
+  const row = document.createElement('div');
+  row.className = 'editor-row';
+  row.innerHTML = `<input type="text" value="Novo Split" /><button onclick="editorRemove(this)">✕</button>`;
+  list.appendChild(row);
+  const input = row.querySelector('input');
+  input.focus();
+  input.select();
+}
+
+function editorRemove(btn) {
+  if (document.querySelectorAll('#editor-list .editor-row').length <= 1) return;
+  btn.parentElement.remove();
+}
+
+function applyEditor() {
+  const inputs = document.querySelectorAll('#editor-list .editor-row input');
+  splits = [...inputs].map(i => ({ name: i.value.trim() || 'Split' }));
+  closeEditor();
+  resetTimer();
+}
+
 // ── TIMER ────────────────────────────────────────────────────────────────────
 
 function startTimer() {

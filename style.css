@@ -57,8 +57,107 @@ button {
   transition: background 0.2s;
 }
 
+#btn-neutral { background: #5060c0; color: #fff; }
+#btn-neutral:hover { background: #6070d0; }
+
 button:hover { background: #ffd060; }
 button:disabled { background: #444; color: #888; cursor: default; }
+
+/* Split actions */
+#split-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+#split-actions button, .btn-file {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  background: #252525;
+  color: #ccc;
+  border: 1px solid #444;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+#split-actions button:hover, .btn-file:hover { background: #333; color: #fff; }
+
+.btn-file input { display: none; }
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: #161616;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  max-width: 420px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-box h2 { color: #f0c040; font-size: 1rem; }
+
+#editor-list {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 50vh;
+}
+
+.editor-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.editor-row input {
+  flex: 1;
+  padding: 6px 8px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.88rem;
+}
+
+.editor-row button {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  background: #3a1010;
+  color: #e06060;
+  border: 1px solid #5a2020;
+}
+
+.editor-row button:hover { background: #5a1010; }
+
+.editor-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-cancel { background: #333 !important; color: #aaa !important; }
+.btn-cancel:hover { background: #444 !important; color: #fff !important; }
 
 #game-results {
   width: 100%;

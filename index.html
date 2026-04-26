@@ -11,8 +11,9 @@
     <h1>⏱ Speedrun Timer</h1>
 
     <div id="search-section">
-      <input id="game-input" type="text" placeholder="Game name..." />
-      <button onclick="searchGame()">Search</button>
+      <input id="game-input" type="text" placeholder="Nome do jogo..." />
+      <button onclick="searchGame()">Buscar</button>
+      <button id="btn-neutral" onclick="neutralGame()" title="Jogo sem run no Speedrun.com">🎮 Neutro</button>
       <div id="game-results"></div>
     </div>
 
@@ -27,6 +28,11 @@
         <button id="btn-start" onclick="startTimer()">Start</button>
         <button id="btn-split" onclick="doSplit()" disabled>Split</button>
         <button id="btn-reset" onclick="resetTimer()">Reset</button>
+      </div>
+      <div id="split-actions">
+        <button onclick="openEditor()">✏️ Editar Splits</button>
+        <button onclick="saveSplitsFile()">💾 Salvar</button>
+        <label class="btn-file">📂 Carregar<input type="file" accept=".json" onchange="loadSplitsFile(event)" /></label>
       </div>
       <div id="splits-container">
         <table id="splits-table">
@@ -43,6 +49,19 @@
       </div>
       <div id="pb-section">
         <span>PB: <span id="pb-display">--</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor Modal -->
+  <div id="editor-modal" class="modal hidden">
+    <div class="modal-box">
+      <h2>✏️ Editar Splits</h2>
+      <div id="editor-list"></div>
+      <div class="editor-footer">
+        <button onclick="editorAddSplit()">+ Adicionar</button>
+        <button onclick="applyEditor()">✅ Aplicar</button>
+        <button class="btn-cancel" onclick="closeEditor()">Cancelar</button>
       </div>
     </div>
   </div>
